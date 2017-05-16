@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <!-- 引入文件 -->
+    <link rel="stylesheet" href="../__THEME_STATIC__/js/framework/bootstrap-3.3.5/css/bootstrap.min.css" charset="utf-8">
+    <link rel="stylesheet" href="../__THEME_STATIC__/css/bootstrap-theme-ny.css" />
+    <link rel="stylesheet" href="../__THEME_STATIC__/css/ucCommon.css" />
+    <link rel="stylesheet" href="../__THEME_STATIC__/css/ucComponent.css" />
+    <!-- IE9 以下需要的资源 -->
+    <!--[if lt IE 9]>
+		<link rel="stylesheet" href="../__THEME_STATIC__/css/common/common/bsIE7-8.css"/>
+
+		<script src="../__THEME_STATIC__/js/browser/html5shiv.min.js"></script>
+		<script src="../__THEME_STATIC__/js/browser/respond.min.js"></script>
+		<script src="../__THEME_STATIC__/js/browser/PIE.js"></script>
+	<![endif]-->
+    <script src="../__THEME_STATIC__/js/framework/jquery/jquery-1.12.2.min.js" charset="utf-8"></script>
+    <script src="../__THEME_STATIC__/js/framework/bootstrap-3.3.5/js/bootstrap.min.js" charset="utf-8"></script>
+    <script src="../__THEME_STATIC__/js/plugin/jQuery/artTemplate/template.js" charset="utf-8"></script>
+    <script src="../__THEME_STATIC__/js/plugin/jQuery/jquery.cookie.js" charset="utf-8"></script>
+    <script src="../__THEME_STATIC__/js/plugin/jQuery/jquery-dateFormat.min.js" charset="utf-8"></script>
+    <script src="../__THEME_STATIC__/js/plugin/jQuery/dialog/jquery.dialog.js?skin=ucDialog"></script>
+    <script src="../__THEME_STATIC__/js/plugin/jQuery/dialog/plugins/iframeTools.js"></script>
+    <script src="../__THEME_STATIC__/js/plugin/plupload/plupload.full.min.js"></script>
+    <script src="../__THEME_STATIC__/js/common/X.min.js"></script>
+    <!-- <script src="../__THEME_STATIC__/js/common/components.js"></script> -->
+    <!-- <script src="__THEME_STATIC__/js/common/ucCommon.js"></script> -->
+</head>
+
+<body style="height: 1000px">
+    <!-- 组件 -->
+    <!-- <div id="contentBox">uuu</div> -->
+    <!-- 快捷feedback提示框 -->
+    <div class="ui-feedback-layout" id="nyFeedback">
+        <div class="ui-feedback ui-feedback-success">
+            <div class="ui-feedback-icon"></div>
+            <div class="ui-feedback-text">
+                操作成功
+            </div>
+            <span class="ui-feedback-close">&times;</span>
+        </div>
+    </div>
+    <!-- 异步请求loading效果 -->
+    <div id="nyWaitingTip" class="ny-loading-tip">
+        <div class="ny-loading-mask"></div>
+        <div class="ny-loading-box">
+            <div class="loading-tip-head">
+                提示信息
+            </div>
+            <i></i>
+            <div class="loading-tip-text">努力加载中，请稍后......</div>
+        </div>
+    </div>
+    <!-- 普通提示框，来自 Bootstrap 的 Small modal -->
+    <div class="modal fade nytips-modal" tabindex="-1" role="dialog" id="nyTips">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">消息</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- 主要内容 -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 表格无数据提示 模版 -->
+    <script id="nonedataTdTpl" type="text/html">
+        <tr>
+            <td colspan="{{cols}}" class="ny-nonedata-td">
+                <div class="ny-nonedata-wrapper tip-icon-info-large">
+                    <div class="ny-nonedata-text">{{text}}</div>
+                    {{if subtext}}
+                    <div class="ny-nonedata-subtext">
+                        {{if subtextLink}}
+                        <a href="{{subtextLink}}" target="_blank">{{subtext}}</a> {{else}} {{subtext}} {{/if}}
+                    </div>
+                    {{/if}}
+                </div>
+            </td>
+        </tr>
+    </script>
+    <!-- 表格无搜索结果提示 模版 -->
+    <script id="noneSearchRecordTdTpl" type="text/html">
+        <tr>
+            <td colspan="{{cols}}" class="ny-nonedata-td">
+                <div class="ny-nonedata-wrapper tip-icon-info-large">
+                    <div class="ny-nonedata-text">
+                        搜索“{{searchKey}}”的结果为空
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </script>
+    <!-- 分页模板 -->
+    <script id="paginationTpl" type="text/html">
+        <div class="clearfix pager-wrapper">
+            <div class="pager-count pull-left">
+                共有
+                <span class="text-primary">
+				{{pager.total}}
+			</span> 条记录
+            </div>
+            <div class="ny-pagination pull-right default-transition-children-fast" id="pager">
+                <span class="page-button pager-first"></span>
+                <span class="page-button pager-prev"></span>
+                <span class="page-number default-transition-children-fast">
+				<!-- <span class="page-button page--current">1</span> -->
+                <span class="page-button">n</span>
+                </span>
+                <span class="page-button pager-next"></span>
+                <span class="page-button pager-last"></span>
+            </div>
+        </div>
+    </script>
+    <!-- 上传附件模板  attachment-uploading attachment-done -->
+    <script type="text/html" id="attachment">
+        <span class="attachment-item attachment-uploading">
+		<a href="#a_null" class="add-cover"></a>
+		<img src="" alt="" data-file_path="">
+		<a class="delete-attachment default-transition text-center" href="#a_null">删除</a>
+		<span class="uploading-tip text-center">上传中...</span>
+        </span>
+    </script>
+    <!-- 上传附件模板-文档  attachment-uploading attachment-done -->
+    <script type="text/html" id="attachment2">
+        <span class="attachment-item-document document-upload">
+		<span class="document-name">上传中...</span>
+        <span class="delete-attachment2">×</span>
+        <!--<span class="uploading-tip text-center">上传中...</span>-->
+        </span>
+    </script>
+    <div id="contentBox"></div>
+    <!-- 下拉搜索 -->
+    <script type="text/html" id="contentTemplate">
+        <div data-field_name="classID0" class="ny-dropdown-container dropdown btn-group">
+            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                <span class="selected-content"></span>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#" data-drop="1">Java</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#" data-drop="2" class="ny-default-option">数据挖掘</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#" data-drop="3">数据通信/网络</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#" data-drop="4">分离的链接</a>
+                </li>
+            </ul>
+        </div>
+        <hr>
+        <!-- <div data-field_name="classID" class="ny-dropdown-container btn-group btn-group-short select-with-icon server-location-select margin-left-10">
+			<a type="button" href="#a_null" class="ny-btn btn-select dropdown-toggle" data-toggle="dropdown">
+				<span class="selected-content"></span>
+				<span class="ny-caret"></span>
+			</a>
+			<ul class="dropdown-menu ny-search-dropdown">
+				<li><a href="?type=0" data-drop="0">全部</a></li>
+				<li><a href="?type=1" data-drop="1">个人</a></li>
+				<li><a href="?type=2" data-drop="2" class="ny-default-option">企业</a></li>
+			</ul>
+		</div> -->
+        <table class="ny-table margin-bottom-20">
+            <thead>
+                <tr>
+                    <th width="15%" data-order_name="code">备案券码</th>
+                    <th data-order_name="status">状态</th>
+                    <th data-order_name="status111">状态11</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+        </table>
+        {{include "paginationTpl"}}
+    </script>
+
+
+
+<form id="verifyProfileForm" class="form-horizontal">
+	<div class="form-group" id="bankNameBlock">
+		<div class="ny-control-label ny-label-long">
+			<span class="necessary-mark">*</span>
+			银行名称：
+		</div>
+		<div class="col-xs-8 ny-form-control validate-control">
+			<div class="input-contain">
+				<input type="text" name="bankName" value="" class="ny-input-reset ny-long-input" placeholder="请输入银行中文名称">
+			</div>
+			<div class="input-reminder">如：中国工商银行深圳科技园分行</div>
+			<div class="error-reminder"></div>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="ny-control-label ny-label-long">
+			<span class="necessary-mark">*</span>
+			问题描述：
+		</div>
+		<div class="col-xs-8 ny-form-control validate-control line-height-1">
+			<textarea name="content" id="" cols="63" rows="5" class="ny-input-reset"
+			          placeholder="请描述您的问题"></textarea>
+			<div class="error-reminder"></div>
+		</div>
+	</div>
+	<a href="#a_null" class="ny-btn btn-strong" id="savingInfo">提交审核</a>
+</form>	
+<div class="alert-warn-lg margin-bottom-20">
+	<div class="tip-title">
+		温馨提示：
+	</div>
+	<div class="tip-content">
+		1111
+	</div>
+</div>
+<div class="ny-panel-body">
+<div class="step-bar-outer clearfix text-center margin-bottom-20">
+	<div class="step-bar step-bar-begin">
+		<div class="step-colored">
+			<span class="step-prefix">
+			</span>
+			<span>
+				填写认证资料
+			</span>
+		</div>
+		<span class="step-arrow-right"></span>
+	</div>
+	<div class="step-bar step-bar-center">
+		<span class="step-arrow-left"></span>
+		<div class="step-colored">
+			<span class="step-prefix">
+			</span>
+			<span>
+				等待系统打款
+			</span>
+		</div>
+		<span class="step-arrow-right"></span>
+	</div>
+	<div class="step-bar step-bar-center">
+	<span class="step-arrow-left"></span>
+		<div class="step-colored">
+			<span class="step-prefix">
+			</span>
+			<span>
+				填写收款金额
+			</span>
+		</div>
+		<span class="step-arrow-right"></span>
+	</div>
+	<div class="step-bar step-bar-end step--current step--failed">
+		<span class="step-arrow-left"></span>
+		<div class="step-colored">
+			<span class="step-prefix">
+			</span>
+			<span>
+				VIP认证
+			</span>
+		</div>
+	</div>
+</div>
+
+    <script type="text/javascript">
+    var nyData = {
+        pager: {
+            page: 1,
+            total: 0,
+            pageSize: 5
+        },
+        filter: {
+            searchType: 2,
+            searchKey: "haha",
+            orderType: "desc",
+            orderName: "code"
+        }
+    };
+    $(function() {
+        NY.proxyRenderer.renderContent();
+        NY.component.initDropDown();
+        NY.component.initNumber();
+        NY.biz.makeListTableSortable();    
+    })
+    </script>
+</body>
+
+</html>

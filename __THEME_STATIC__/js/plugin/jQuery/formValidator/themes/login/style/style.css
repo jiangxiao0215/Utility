@@ -1,0 +1,30 @@
+.onShow,
+.onCorrect,
+.onLoad{display:none}
+
+
+
+.onError div,
+.onFocus div{
+	font-size: 12px;
+	height:33px;
+	width:212px;
+	padding-left:36px;
+	line-height:30px;
+	overflow:hidden;
+}
+
+
+.onError div
+{
+    background:url(../images/onError.gif) no-repeat;
+	color:#301d1d;
+}
+
+
+
+
+.onFocus div{
+    background:url(../images/onFocus.gif) no-repeat;
+	color:#304356;
+}

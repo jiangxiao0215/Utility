@@ -1,0 +1,340 @@
+/* UserCenter 通用样式 */
+body {
+	padding-top: 60px;
+	padding-left: 180px;
+	background: #ebf1f3;
+	color: #4d4d4d;
+	font-size: 14px;
+}
+a {
+	text-decoration: none;
+	color: #00aaff;
+}
+a:hover {
+	color: #5c91e6;
+}
+body.graceful-menu {
+	padding-left: 80px;
+}
+ul {
+	margin: 0;
+	padding: 0;
+}
+li {
+	list-style: none;
+}
+i{
+	font-style:normal;
+	color:#999;
+}
+
+/*布局原子类*/
+.inline-block {
+	display: inline-block;
+}
+.padding-0 {
+	padding: 0;
+}
+.padding-20 {
+	padding: 20px;
+}
+.padding-top-0 {
+	padding-top: 0;
+}
+.padding-lr-0 {
+	padding-left: 0;
+	padding-right: 0;
+}
+.padding-bottom-0 {
+	padding-bottom: 0;
+}
+.margin-0 {
+	margin: 0;
+}
+.margin-bottom-10 {
+	margin-bottom: 10px;
+}
+.margin-bottom-20 {
+	margin-bottom: 20px;
+}
+.margin-bottom-40 {
+	margin-bottom: 40px;
+}
+.margin-bottom-60 {
+	margin-bottom: 60px;
+}
+.margin-left-60 {
+	margin-left: 60px;
+}
+.margin-left-40 {
+	margin-left: 40px;
+}
+.margin-left-20 {
+	margin-left: 20px;
+}
+.margin-left-10 {
+	margin-left: 10px;
+}
+.margin-right-10 {
+	margin-right: 10px;
+}
+.input-reset {
+	display: inline-block;
+	line-height: 1;
+	padding: 0;
+	margin: 0;
+	border: none;
+	outline: none;
+	float: none;
+}
+.input-contain {
+	display: inline-block;
+	width: 300px;
+}
+.pre-reset {
+	display: block;
+	padding: 0;
+	margin: 0;
+	font-size: inherit;
+	line-height: inherit;
+	color: inherit;
+	word-break: break-all;
+	word-wrap: break-word;
+	background-color: transparent;
+	border: none;
+	border-radius: 0;
+}
+/* 功能原子类 */
+.strong {
+	font-weight: bold;
+}
+.text-unindent {
+	text-indent: 0;
+}
+.line-height-1 {
+	line-height: 1;
+}
+.line-height-2 {
+	line-height: 2;
+}
+.nowrap {
+	white-space: nowrap;
+}
+.normal-wrap {
+	white-space: normal;
+}
+.text-overflow {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.scroll-x {
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+.link-undecorated,
+.link-undecorated a {
+	text-decoration: none;
+}
+.bg-transparent,
+.bg-transparent:focus,
+.bg-transparent:hover,
+.bg-transparent:active {
+	background-color: transparent;
+}
+.font-size-12 {
+	font-size: 12px;
+}
+.font-size-14 {
+	font-size: 14px;
+}
+.font-size-16 {
+	font-size: 16px;
+}
+/* 业务原子类 */
+.show-captcha {
+	cursor: pointer;
+}
+/* 金额整数部分字体 */
+.money-int {
+	font-size: 24px;
+}
+
+/* 异步请求loading效果 */
+.ny-loading-tip {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 9999;
+	width: 100%;
+	height: 100%;
+}
+.ny-loading-mask {
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0.6;
+	filter:alpha(opacity=60);
+	background: #000;
+	width: 100%;
+	height: 100%;
+}
+.loading-tip-head {
+	height: 50px;
+	line-height: 50px;
+	background-color: #5c91e6;
+	border-radius: 2px 2px 0 0;
+	padding-left: 20px;
+	color: #fff;
+}
+.ny-loading-box {
+	position: absolute;
+	top: 33%;
+	left: 50%;
+	min-width: 360px;
+	line-height: 100px;
+	border-radius: 2px 2px 0 0;
+	margin-top: -30px;
+	margin-left: -150px;
+	background: #fff;
+	color: #666;
+	font-size: 16px;
+	box-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+}
+.ny-loading-box > i {
+	float: left;
+	width: 40px;
+	height: 40px;
+	margin:10px 20px 0 20px;
+	margin-top: 29px;
+	margin-left: 60px;
+	background: url(img/uc/ny_loading.gif) no-repeat center center;
+}
+/* 预定义 transition */
+.default-transition,
+.default-transition-fast,
+.default-transition-slow,
+.default-transition-children > *,
+.default-transition-children-fast > *,
+.default-transition-children-slow > *,
+.default-transition-tree *,
+.default-transition-tree-fast *,
+.default-transition-tree-slow * {
+	-webkit-transition-duration: 0.3s;
+	-moz-transition-duration: 0.3s;
+	-ms-transition-duration: 0.3s;
+	-o-transition-duration: 0.3s;
+	transition-duration: 0.3s;
+
+	/*默认transition-timing-function值是 ease，可以省略*/
+	-webkit-transition-timing-function: ease;
+	-moz-transition-timing-function: ease;
+	-ms-transition-timing-function: ease;
+	-o-transition-timing-function: ease;
+	transition-timing-function: ease;
+
+	/* 有的元素通过 z-index 来做突出层级，则失去 hover时也会失去 z-index，这时部分过渡效果会受到影响。所以这里加上z-index，维持与其它属性的过渡的共同作用 */
+	-webkit-transition-property: visibility, height, background-color, background-position, color, border-color, opacity, z-index, transform, -webkit-box-shadow, bottom;
+	-moz-transition-property: visibility, height, background-color, background-position, color, border-color, opacity, z-index, transform, -moz-box-shadow, bottom;
+	-ms-transition-property: visibility, height, background-color, background-position, color, border-color, opacity, z-index, transform, -ms-box-shadow, bottom;
+	-o-transition-property: visibility, height, background-color, background-position, color, border-color, opacity, z-index, transform, -o-box-shadow, bottom;
+	transition-property: visibility, height, background-color, background-position, color, border-color, opacity, z-index, transform, box-shadow, bottom;
+}
+.default-transition-fast,
+.default-transition-children-fast > *,
+.default-transition-tree-fast * {
+	-webkit-transition-duration: 0.2s;
+	-moz-transition-duration: 0.2s;
+	-ms-transition-duration: 0.2s;
+	-o-transition-duration: 0.2s;
+	transition-duration: 0.2s;
+}
+.default-transition-slow,
+.default-transition-children-slow > *,
+.default-transition-tree-slow * {
+	-webkit-transition-duration: 0.6s;
+	-moz-transition-duration: 0.6s;
+	-ms-transition-duration: 0.6s;
+	-o-transition-duration: 0.6s;
+	transition-duration: 0.6s;
+}
+.clear-transition,
+.clear-transition.default-transition,
+.clear-transition.default-transition-fast,
+.clear-transition.default-transition-slow,
+.clear-transition.default-transition-children > *,
+.clear-transition.default-transition-children-fast > *,
+.clear-transition.default-transition-children-slow > *,
+.clear-transition.default-transition-tree *,
+.clear-transition.default-transition-tree-fast *,
+.clear-transition.default-transition-tree-slow *{
+	-webkit-transition-property: none;
+	-moz-transition-property: none;
+	-ms-transition-property: none;
+	-o-transition-property: none;
+	transition-property: none;
+}
+
+/* 通用icon类 */
+/* tip-icon-主题-大小 分类 */
+.tip-icon-success-huge {
+	background: url(img/uc/tip_icon_success_50.png) no-repeat;
+}
+.tip-icon-success-large {
+	background: url(img/uc/tip_icon_success_40.png) no-repeat;
+}
+.tip-icon-success-small {
+	background: url(img/uc/tip_icon_success_20.png) no-repeat;
+}
+.tip-icon-success-mini {
+	background: url(img/uc/tip_icon_success_16.png) no-repeat;
+}
+.tip-icon-warn-huge {
+	background: url(img/uc/tip_icon_warn_50.png) no-repeat;
+}
+.tip-icon-warn-large {
+	background: url(img/uc/tip_icon_warn_40.png) no-repeat;
+}
+.tip-icon-warn-small {
+	background: url(img/uc/tip_icon_warn_20.png) no-repeat;
+}
+.tip-icon-warn-mini {
+	background: url(img/uc/tip_icon_warn_16.png) no-repeat;
+}
+.tip-icon-warn-mini-solid {
+	background: url(img/uc/tip_icon_warn_16_solid.png) no-repeat;
+}
+.tip-icon-error-huge {
+	background: url(img/uc/tip_icon_error_50.png) no-repeat;
+}
+.tip-icon-error-large {
+	background: url(img/uc/tip_icon_error_40.png) no-repeat;
+}
+.tip-icon-error-small {
+	background: url(img/uc/tip_icon_error_20.png) no-repeat;
+}
+.tip-icon-error-mini {
+	background: url(img/uc/tip_icon_error_16.png) no-repeat;
+}
+.tip-icon-info-mini {
+	background: url(img/uc/tip_icon_info_16.png) no-repeat;
+}
+.tip-icon-info-large {
+	background: url(img/uc/tip_icon_info_40.png) no-repeat;
+}
+/* 表格排序 */
+.filter-icon {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	background: no-repeat center;
+	background-image: url(img/uc/filter_none.png);
+	vertical-align: middle;
+}
+.filter-asc {
+	background-image: url(img/uc/filter_asc.png);
+}
+.filter-desc {
+	background-image: url(img/uc/filter_desc.png);
+}
